@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  ig_handle: MyString
+  deposit_paid: false
+  total_tables: 1
+  notes: MyText
+  event: one
+
+two:
+  name: MyString
+  ig_handle: MyString
+  deposit_paid: false
+  total_tables: 1
+  notes: MyText
+  event: two

@@ -1,0 +1,36 @@
+<div class="row justify-content-center mt-4">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white py-3">
+        <h1 class="h3 mb-0">Create New Event</h1>
+      </div>
+      <div class="card-body p-4">
+        
+        <%= form_with model: @event, local: true do |f| %>
+          
+          <div class="mb-3">
+            <%= f.label :title, class: "form-label fw-bold" %>
+            <%= f.text_field :title, class: "form-control", placeholder: "e.g., Summer Makers Market", required: true %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :date, class: "form-label fw-bold" %>
+            <%= f.date_field :date, class: "form-control", required: true %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :location, class: "form-label fw-bold" %>
+            <%= f.text_field :location, class: "form-control", placeholder: "e.g., Convention Center, Hall B", required: true %>
+          </div>
+
+          <div class="d-grid gap-2">
+            <%= f.submit "Create Event", class: "btn btn-primary btn-lg" %>
+            <%= link_to "← Back to Home", root_path, class: "btn btn-outline-secondary mt-1" %>
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

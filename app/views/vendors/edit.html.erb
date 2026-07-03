@@ -1,0 +1,92 @@
+<div class="row justify-content-center mt-4">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-dark text-white py-3">
+        <h1 class="h3 mb-0 d-flex align-items-center">
+          <i class="bi bi-pencil-square me-2"></i>Updating: <%= @vendor.name.presence || "New Vendor" %>
+        </h1>
+      </div>
+      <div class="card-body p-4">
+        
+        <%= form_with model: @vendor, local: true do |f| %>
+          
+          <!-- Event Association Selection -->
+          <div class="mb-3">
+            <%= f.label :event_id, "Assigned Event", class: "form-label fw-bold" %>
+            <%= f.collection_select :event_id, Event.order(date: :desc), :id, :title, { prompt: "Choose an Event" }, { class: "form-select", required: true } %>
+          </div>
+
+          <!-- Name & IG Handle Grid Row -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= f.label :name, "Vendor Name", class: "form-label fw-bold" %>
+              <%= f.text_field :name, class: "form-control", placeholder: "Current: #{@vendor.name}", required: true %>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <%= f.label :ig_handle, "IG Handle (without @)", class: "form-label fw-bold" %>
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted">@</span>
+                <%= f.text_field :ig_handle, class: "form-control", placeholder: @vendor.ig_handle.presence || "No handle set" %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price & Tables Grid Row -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= f.label :price, "Base Price Rate", class: "form-label fw-bold" %>
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted">$</span>
+                <%= f.number_field :price, step: '0.01', class: "form-control", placeholder: number_with_precision(@vendor.price, precision: 2) || "0.00" %>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <%= f.label :total_tables, "Total Tables Booked", class: "form-label fw-bold" %>
+              <%= f.number_field :total_tables, min: 1, class: "form-control", placeholder: "Current: #{@vendor.total_tables}", required: true %>
+            </div>
+          </div>
+
+          <!-- Payment Metrics Status (Group Container Box) -->
+          <div class="card border bg-light-subtle my-4 p-3 rounded">
+            <h6 class="text-uppercase tracking-wider fw-bold text-secondary mb-3 small">
+              Payment Processing Status 
+              <span class="text-muted text-lowercase font-monospace">(current state checked below)</span>
+            </h6>
+            
+            <div class="form-check form-switch mb-3">
+              <%= f.check_box :deposit_paid, class: "form-check-input", role: "switch" %>
+              <%= f.label :deposit_paid, class: "form-check-label fw-semibold text-dark ms-1" do %>
+                <i class="bi bi-pie-chart text-warning me-1"></i> Deposit Paid?
+              <% end %>
+            </div>
+
+            <div class="form-check form-switch mb-1">
+              <%= f.check_box :received_payment, class: "form-check-input", role: "switch" %>
+              <%= f.label :received_payment, class: "form-check-label fw-semibold text-dark ms-1" do %>
+                <i class="bi bi-check-circle text-success me-1"></i> Paid in Full?
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Internal Admin Notes -->
+          <div class="mb-4">
+            <%= f.label :notes, "Internal Vendor Notes", class: "form-label fw-bold" %>
+            <%= f.text_area :notes, rows: 3, class: "form-control", placeholder: @vendor.notes.presence || "No internal notes written yet..." %>
+          </div>
+
+          <!-- Form Action Submits -->
+          <div class="d-grid gap-2">
+            <%= f.submit "Save & Update Vendor", class: "btn btn-primary btn-lg" %>
+            <%= link_to event_path(@vendor.event_id), class: "btn btn-outline-secondary mt-1 d-inline-flex align-items-center justify-content-center" do %>
+              <i class="bi bi-x-circle me-2"></i>Cancel & Back to Event
+            <% end %>
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

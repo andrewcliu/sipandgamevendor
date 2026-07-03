@@ -1,0 +1,126 @@
+<div class='row'>
+  <div class='col-sm-9'>
+<div class="row justify-content-center mt-4">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white py-3">
+        <h1 class="h3 mb-0">Add New Vendor</h1>
+      </div>
+      <div class="card-body p-4">
+        
+        <%= form_with model: @vendor, local: true do |f| %>
+          
+          <div class="mb-3">
+            <%= f.label :event_id, "Select Event", class: "form-label fw-bold" %>
+            <%= f.collection_select :event_id, Event.where("date >= ?", Date.current).order(date: :asc), :id, :title, { prompt: "Choose an Event" }, { class: "form-select", required: true } %>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= f.label :name, class: "form-label fw-bold" %>
+              <%= f.text_field :name, class: "form-control", placeholder: "Vendor Name", required: true %>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <%= f.label :ig_handle, "IG Handle (without @)", class: "form-label fw-bold" %>
+              <div class="input-group">
+                <span class="input-group-text">@</span>
+                <%= f.text_field :ig_handle, class: "form-control", placeholder: "username" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= f.label :price, class: "form-label fw-bold" %>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <%= f.number_field :price, step: '0.01', class: "form-control", placeholder: '0.00' %>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <%= f.label :total_tables, "Total Tables", class: "form-label fw-bold" %>
+              <%= f.number_field :total_tables, min: 1, class: "form-control", value: 1, required: true %>
+            </div>
+          </div>
+
+          <div class="mb-3 form-check form-switch mt-4">
+            <%= f.check_box :deposit_paid, class: "form-check-input", role: "switch" %>
+            <%= f.label :deposit_paid, "Deposit Paid?", class: "form-check-label fw-bold ms-1" %>
+          </div>
+          
+          <div class="mb-3 form-check form-switch mt-4">
+            <%= f.check_box :received_payment, class: "form-check-input", role: "switch" %>
+            <%= f.label :received_payment, "Received Full Payment?", class: "form-check-label fw-bold ms-1" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :notes, class: "form-label fw-bold" %>
+            <%= f.text_area :notes, rows: 3, class: "form-control", placeholder: "Any special accommodations or internal notes..." %>
+          </div>
+
+          <div class="d-grid gap-2">
+            <%= f.submit "Add Vendor", class: "btn btn-primary btn-lg" %>
+            <%= link_to "← Back to Home", root_path, class: "btn btn-outline-secondary mt-1" %>
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+  <div class='col-sm-3'>
+
+<div class="mb-3">
+  <input class="form-control" id="vendorSearch" type="text" placeholder="Search by IG Handle...">
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">IG Handle</th>
+        <th scope="col">Base Price</th>
+      </tr>
+    </thead>
+    <tbody id="vendorTableBody">
+      <% distinct_vendors = Vendor.select("DISTINCT ON (ig_handle) *").to_a %>
+      
+      <% if distinct_vendors.any? %>
+        <% distinct_vendors.each do |v| %>
+          <tr>
+            <td><strong><%= v.name %></strong></td>
+            <td><%= v.ig_handle %></td>
+            <td><%= number_to_currency v.price %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr id="no-vendors-row">
+          <td colspan="3" class="text-center text-muted py-3">No vendors found.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  $(document).on('turbo:load', function() { 
+    $("#vendorSearch").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      
+      $("#vendorTableBody tr").each(function() {
+        if ($(this).attr('id') === 'no-vendors-row') return;
+
+        // Targets the 2nd column (index 1) for the IG handle
+        var igText = $(this).find("td").eq(1).text().toLowerCase();
+        $(this).toggle(igText.indexOf(value) > -1);
+      });
+    });
+  });
+</script>
+  </div>
