@@ -64,8 +64,11 @@
         <% if @event.vendors.any? %>
           <% @event.vendors.each do |vendor| %>
             <% total_due = vendor.price.to_f * vendor.total_tables.to_i %>
-            <% deposit = vendor.deposit_paid.nil? ? 0.0 : vendor.deposit_paid %>
-            <% amount_due = vendor.received_payment ? 0.0 : (total_due - deposit.to_f) %>
+
+            <% # Safely convert deposit_paid. If it's a boolean (false/true), treat it as 0.0 %>
+            <% deposit_val = (vendor.deposit_paid.is_a?(TrueClass) || vendor.deposit_paid.is_a?(FalseClass)) ? 0.0 : vendor.deposit_paid.to_f %>
+
+            <% amount_due = vendor.received_payment ? 0.0 : (total_due - deposit_val) %>
             
             <tr>
               <td class="ps-4 fw-semibold text-dark"><%= link_to vendor.name, edit_vendor_path(vendor) %></td>
