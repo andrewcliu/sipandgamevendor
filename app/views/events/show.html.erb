@@ -89,6 +89,7 @@
               <td class="text-end font-monospace fw-bold <%= amount_due > 0 ? 'text-danger' : 'text-muted' %>">
                 <%= number_to_currency(amount_due) %>
               </td>
+              
               <td class="text-center">
                 <%= link_to edit_vendor_path(vendor), class: "text-decoration-none" do %>
                   <% if vendor.received_payment %>
