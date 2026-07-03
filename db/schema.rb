@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_03_000713) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_03_010920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,7 +32,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_03_000713) do
   create_table "vendors", force: :cascade do |t|
     t.string "name"
     t.string "ig_handle"
-    t.boolean "deposit_paid"
     t.integer "total_tables"
     t.text "notes"
     t.bigint "event_id", null: false
@@ -40,6 +39,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_03_000713) do
     t.datetime "updated_at", null: false
     t.decimal "price"
     t.boolean "received_payment"
+    t.decimal "deposit_paid", precision: 8, scale: 2, default: "0.0"
     t.index ["event_id", "ig_handle"], name: "index_vendors_on_event_id_and_ig_handle", unique: true
     t.index ["event_id"], name: "index_vendors_on_event_id"
   end

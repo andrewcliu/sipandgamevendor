@@ -1,8 +1,8 @@
 class VendorsController < ApplicationController
   before_action :require_user
-  def new
-    @vendor = Vendor.new
-  end
+def new
+  @vendor = Vendor.new(event_id: params[:event_id])
+end
 def edit
   @vendor = Vendor.find(params[:id])
 end

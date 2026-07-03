@@ -9,12 +9,14 @@
       <div class="card-body p-4">
         
         <%= form_with model: @vendor, local: true do |f| %>
-          
           <div class="mb-3">
             <%= f.label :event_id, "Select Event", class: "form-label fw-bold" %>
-            <%= f.collection_select :event_id, Event.where("date >= ?", Date.current).order(date: :asc), :id, :title, { prompt: "Choose an Event" }, { class: "form-select", required: true } %>
+            <%= f.collection_select :event_id, 
+                  Event.where("date >= ?", Date.current).order(date: :asc), 
+                  :id, :title, 
+                  { prompt: "Choose an Event", selected: f.object.event_id }, 
+                  { class: "form-select", required: true } %>
           </div>
-
           <div class="row">
             <div class="col-md-6 mb-3">
               <%= f.label :name, class: "form-label fw-bold" %>
@@ -46,10 +48,15 @@
           </div>
 
           <div class="mb-3 form-check form-switch mt-4">
-            <%= f.check_box :deposit_paid, class: "form-check-input", role: "switch" %>
-            <%= f.label :deposit_paid, "Deposit Paid?", class: "form-check-label fw-bold ms-1" %>
+
+            <%= f.label :deposit_paid, class: "form-label fw-bold" %>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <%= f.number_field :deposit_paid, step: '0.01', class: "form-control", placeholder: '0.00' %>
+            </div>
+     
           </div>
-          
+
           <div class="mb-3 form-check form-switch mt-4">
             <%= f.check_box :received_payment, class: "form-check-input", role: "switch" %>
             <%= f.label :received_payment, "Received Full Payment?", class: "form-check-label fw-bold ms-1" %>

@@ -43,26 +43,32 @@
 </div>
 
 <div class="card shadow-sm border-0 overflow-hidden">
-  <div class="table-responsive">
+  <div class="table-responsive" style="max-height: 750px; overflow-y: auto;">
     <table class="table table-hover align-middle mb-0">
-      <thead class="table-dark">
+      <thead class="table-dark sticky-top" style="z-index: 10;">
         <tr>
           <th scope="col" class="ps-4">Name</th>
-          <th scope="col">IG Handle</th>
-          <th scope="col">Deposit Status</th>
-          <th scope="col">Final Payment</th>
+          <th scope="col" id="sortIgHeader" style="cursor: pointer; user-select: none;">
+            IG Handle <i class="bi bi-arrow-down-up ms-1 small text-muted" id="sortIcon"></i>
+          </th>
+          <th scope="col" class="text-end">Deposit Paid</th>
           <th scope="col" class="text-center">Table(s)</th>
           <th scope="col" class="text-end">Rate</th>
           <th scope="col" class="text-end">Total Due</th>
+          <th scope="col" class="text-end">Amount Due</th>
+          <th scope="col" class="text-center">Final Status</th>
           <th scope="col" class="pe-4">Notes</th>
         </tr>
       </thead>
       <tbody id="searchableTable">
         <% if @event.vendors.any? %>
           <% @event.vendors.each do |vendor| %>
+            <% total_due = vendor.price.to_f * vendor.total_tables.to_i %>
+            <% amount_due = vendor.received_payment ? 0.0 : (total_due - vendor.deposit_paid.to_f) %>
+            
             <tr>
               <td class="ps-4 fw-semibold text-dark"><%= link_to vendor.name, edit_vendor_path(vendor) %></td>
-              <td>
+              <td data-ig="<%= vendor.ig_handle.to_s.downcase %>">
                 <% if vendor.ig_handle.present? %>
                   <a href="https://instagram.com/<%= vendor.ig_handle %>" target="_blank" class="text-decoration-none text-primary">
                     <i class="bi bi-instagram me-1 small"></i>@<%= vendor.ig_handle %>
@@ -72,21 +78,18 @@
                 <% end %>
               </td>
 
-              <td>
-                <%= link_to edit_vendor_path(vendor), class: "text-decoration-none" do %>
-                  <% if vendor.deposit_paid || vendor.received_payment %>
-                    <span class="badge rounded-pill bg-success-subtle text-success px-3 py-2 border border-success-subtle hover-status-badge" title="Click to edit vendor">
-                      <i class="bi bi-check-circle-fill me-1 small"></i> Paid
-                    </span>
-                  <% else %>
-                    <span class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2 border border-danger-subtle hover-status-badge" title="Click to edit vendor">
-                      <i class="bi bi-pencil-fill me-1 small"></i> Pending
-                    </span>
-                  <% end %>
-                <% end %>
+              <td class="text-end font-monospace">
+                <%= number_to_currency(vendor.deposit_paid) %>
               </td>
           
-              <td>
+              <td class="text-center"><span class="fw-medium"><%= vendor.total_tables %></span></td>
+              <td class="text-end font-monospace"><%= number_to_currency vendor.price %></td>
+              <td class="text-end font-monospace fw-bold text-dark"><%= number_to_currency(total_due) %></td>
+              
+              <td class="text-end font-monospace fw-bold <%= amount_due > 0 ? 'text-danger' : 'text-muted' %>">
+                <%= number_to_currency(amount_due) %>
+              </td>
+              <td class="text-center">
                 <%= link_to edit_vendor_path(vendor), class: "text-decoration-none" do %>
                   <% if vendor.received_payment %>
                     <span class="badge rounded-pill bg-success-subtle text-success px-3 py-2 border border-success-subtle hover-status-badge" title="Click to edit vendor">
@@ -94,21 +97,17 @@
                     </span>
                   <% else %>
                     <span class="badge rounded-pill bg-warning-subtle text-warning px-3 py-2 border border-warning-subtle hover-status-badge" style="color: #856404 !important;" title="Click to edit vendor">
-                      <i class="bi bi-pencil-fill me-1 small"></i> Balance Due
+                      <i class="bi bi-clock me-1 small"></i> Balance Due
                     </span>
                   <% end %>
                 <% end %>
               </td>
-
-              <td class="text-center"><span class="fw-medium"><%= vendor.total_tables %></span></td>
-              <td class="text-end font-monospace"><%= number_to_currency vendor.price %></td>
-              <td class="text-end font-monospace fw-bold text-dark"><%= number_to_currency(vendor.price * vendor.total_tables.to_i) %></td>
               <td class="pe-4 text-secondary"><small><%= vendor.notes %></small></td>
             </tr>
           <% end %>
         <% else %>
           <tr id="no-vendors-row">
-            <td colspan="8" class="text-center text-muted py-5">
+            <td colspan="9" class="text-center text-muted py-5">
               <i class="bi bi-people display-6 mb-2 d-block text-black-50"></i>
               No vendors registered for this event yet.
             </td>
@@ -119,30 +118,64 @@
   </div>
 </div>
 
-<div class="mt-4">
+<div class="mt-4 d-flex gap-2">
   <%= link_to root_path, class: 'btn btn-outline-secondary px-4' do %>
-    Back to Upcoming Events
+    <i class="bi bi-arrow-left me-2"></i>Back to Upcoming Events
   <% end %>
-    <%= link_to new_vendor_path, class: 'btn btn-dark d-inline-flex align-items-center' do %>
-      <i class="bi bi-person-plus me-2"></i>Add New Vendor
-    <% end %>
+  <%= link_to new_vendor_path(event_id: @event.id), class: 'btn btn-dark d-inline-flex align-items-center' do %>
+    <i class="bi bi-person-plus me-2"></i>Add New Vendor
+  <% end %>
 </div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
   $(document).on('turbo:load', function() { 
+    // Live Search Filter
     $("#tableSearch").on("keyup", function() {
       var value = $(this).val().toLowerCase();
-      
       $("#searchableTable tr").each(function() {
         if ($(this).attr('id') === 'no-vendors-row') return;
-
         var nameText = $(this).find("td").eq(0).text().toLowerCase();
         var igText = $(this).find("td").eq(1).text().toLowerCase();
-        
         var match = nameText.indexOf(value) > -1 || igText.indexOf(value) > -1;
         $(this).toggle(match);
+      });
+    });
+
+    // Handle Header Column Sorting State
+    var igAscending = true;
+    $("#sortIgHeader").on("click", function() {
+      var rows = $("#searchableTable tr").not("#no-vendors-row").get();
+      
+      rows.sort(function(a, b) {
+        var valA = $(a).find("td").eq(1).data("ig") || "";
+        var valB = $(b).find("td").eq(1).data("ig") || "";
+        
+        // Handle empty strings so they sink to the bottom context
+        if (valA === "") return 1;
+        if (valB === "") return -1;
+        
+        if (igAscending) {
+          return valA.localeCompare(valB);
+        } else {
+          return valB.localeCompare(valA);
+        }
+      });
+
+      // Update Arrow Icons based on state
+      if (igAscending) {
+        $("#sortIcon").removeClass("bi-arrow-down-up bi-arrow-down").addClass("bi-arrow-up text-primary");
+      } else {
+        $("#sortIcon").removeClass("bi-arrow-up").addClass("bi-arrow-down text-primary");
+      }
+
+      // Reverse direction context flag
+      igAscending = !igAscending;
+
+      // Re-append sorted rows into container DOM view
+      $.each(rows, function(index, row) {
+        $("#searchableTable").append(row);
       });
     });
   });

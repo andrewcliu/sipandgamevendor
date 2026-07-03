@@ -47,6 +47,13 @@
               <%= f.number_field :total_tables, min: 1, class: "form-control", placeholder: "Current: #{@vendor.total_tables}", required: true %>
             </div>
           </div>
+          <div class="col-md-6 mb-3">
+            <%= f.label :deposit_paid, "Deposit Paid", class: "form-label fw-bold" %>
+            <div class="input-group">
+              <span class="input-group-text bg-light text-muted">$</span>
+              <%= f.number_field :deposit_paid, step: '0.01', class: "form-control", placeholder: number_with_precision(@vendor.deposit_paid, precision: 2) || "0.00" %>
+            </div>
+          </div>
 
           <!-- Payment Metrics Status (Group Container Box) -->
           <div class="card border bg-light-subtle my-4 p-3 rounded">
@@ -55,12 +62,6 @@
               <span class="text-muted text-lowercase font-monospace">(current state checked below)</span>
             </h6>
             
-            <div class="form-check form-switch mb-3">
-              <%= f.check_box :deposit_paid, class: "form-check-input", role: "switch" %>
-              <%= f.label :deposit_paid, class: "form-check-label fw-semibold text-dark ms-1" do %>
-                <i class="bi bi-pie-chart text-warning me-1"></i> Deposit Paid?
-              <% end %>
-            </div>
 
             <div class="form-check form-switch mb-1">
               <%= f.check_box :received_payment, class: "form-check-input", role: "switch" %>
