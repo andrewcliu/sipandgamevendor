@@ -18,6 +18,13 @@ class EventsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
+  def destroy
+    @event = Event.find(params[:id])
+    @event.destroy
+    
+    # status: :see_other (303) is required by Turbo for DELETE redirects
+    redirect_to root_path, notice: "Event was successfully deleted.", status: :see_other
+  end
   def create
     @event = Event.new(event_params)
     if @event.save
