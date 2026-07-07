@@ -14,6 +14,14 @@ end
       render :new, status: :unprocessable_entity
     end
   end
+  def destroy
+    @vendor = Vendor.find(params[:id])
+    @event = @vendor.event
+    
+    @vendor.destroy
+    
+    redirect_to event_path(@event), notice: "Vendor was successfully deleted.", status: :see_other
+  end
 # PATCH/PUT /vendors/:id
   def update
     @vendor = Vendor.find(params[:id])

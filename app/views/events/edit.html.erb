@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card border-0 bg-light shadow-sm mb-4">
+      <div class="card-body p-4">
+        <div class="mb-4">
+          <span class="badge bg-primary mb-2 text-uppercase tracking-wider">Edit</span>
+          <h1 class="display-6 fw-bold text-dark mb-0">Event Details</h1>
+        </div>
+
+        <%= form_with(model: @event, local: true) do |f| %>
+          <% if @event.errors.any? %>
+            <div class="alert alert-danger rounded shadow-sm">
+              <h5 class="alert-heading h6 fw-bold">Please fix the following errors:</h5>
+              <ul class="mb-0 small">
+                <% @event.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-3">
+            <%= f.label :title, class: "form-label fw-bold text-secondary" %>
+            <%= f.text_field :title, class: "form-control", placeholder: "e.g., Summer Night Market" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :date, class: "form-label fw-bold text-secondary" %>
+            <%= f.date_field :date, class: "form-control" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :location, class: "form-label fw-bold text-secondary" %>
+            <%= f.text_field :location, class: "form-control", placeholder: "e.g., Downtown Convention Center" %>
+          </div>
+
+          <div class="d-flex gap-2 pt-2 border-top">
+            <%= link_to event_path(@event), class: 'btn btn-outline-secondary px-4' do %>
+              <i class="bi bi-x-circle me-1"></i> Cancel
+            <% end %>
+            
+            <%= button_tag type: 'submit', class: 'btn btn-success px-4' do %>
+              <i class="bi bi-check-circle me-1"></i> Save Changes
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
