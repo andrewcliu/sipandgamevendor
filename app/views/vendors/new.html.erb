@@ -91,11 +91,11 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">IG Handle</th>
-        <th scope="col">Base Price</th>
+        <th scope="col">Lowest Base Price</th>
       </tr>
     </thead>
     <tbody id="vendorTableBody">
-      <% distinct_vendors = Vendor.select("DISTINCT ON (ig_handle) *").to_a %>
+      <% distinct_vendors = Vendor.select("DISTINCT ON (ig_handle) *").order("ig_handle, price ASC") %>
       
       <% if distinct_vendors.any? %>
         <% distinct_vendors.each do |v| %>
