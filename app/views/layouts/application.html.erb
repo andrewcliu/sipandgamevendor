@@ -1,28 +1,243 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= content_for(:title) || "Sip and Game Expo" %></title>
+
+    <% unless Rails.env.development? || Rails.env.test? %>
+
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-97WGCFJR9E"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-97WGCFJR9E');
+      </script>
+    <% end %>
+    
+
+  
+    <% if params[:action] == 'boba_tea_menu' %>
+      <title><%= content_for(:title) || "Sip and Game Boba Tea" %></title>
+      <meta name="description" content="Sip & Game in Carmichael menu options tailored for our gamers.">
+      <meta name="keywords" content="boba tea, card games, Carmichael, TCG events, fruit drinks, game cafe, console games, TCG near me, Pokemon tcg near me, Magic near me">
+    <% elsif params[:action] == 'gallery' %>
+      <title><%= content_for(:title) || "Sip and Game Gallery" %></title>
+      <meta name="description" content="Explore Sip & Game’s gallery — showcasing our gaming lounge, TCG events, boba creations, and community moments in Carmichael.">
+      <meta name="keywords" content="Sip and Game gallery, Carmichael gaming cafe, boba drinks photos, card shop events, TCG tournaments Sacramento, Magic Commander nights, Pokemon TCG events, gaming lounge pictures, community card shows, Sacramento game cafe">
+    <% elsif params[:action] == 'all_about_sip' %>
+      <title><%= content_for(:title) || "All About Sip and Game" %></title>
+      <meta name="description" content="Learn about Sip & Game — a community-driven gaming lounge and café in Carmichael. We bring together trading card games, console play, and boba drinks with weekly events, tournaments, and card shows.">
+      <meta name="keywords" content="Sip and Game Carmichael, about Sip and Game, gaming café Sacramento, community card shop, TCG events Carmichael, Magic Commander Sacramento, Pokemon TCG Sacramento, boba and gaming lounge, Sacramento card shows, gaming community café">
+    <% else %>
+      <title><%= content_for(:title) || "Sip and Game TCG & Boba" %></title>
+      <meta name="description" content="Sip & Game in Carmichael offers boba tea, tabletop games, and a chill space to sip, play, and connect.">
+      <meta name="keywords" content="boba tea, card games, Carmichael, TCG events, fruit drinks, game cafe, console games, TCG near me, Pokemon tcg near me, Magic near me">
+    <% end %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="author" content="Sip and Game">
+    <meta name="robots" content="index, follow">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
     <%= yield :head %>
 
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= favicon_link_tag 'Untitled design.jpg', type: 'image/jpeg' %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="apple-touch-icon" href="<%= image_path('Untitled design.jpg') %>">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+      <div class="container-fluid">
+
+        <a class="navbar-brand d-lg-none" href="/">
+          <%= image_tag('logo.png', {style:'width:125px;', alt:'sip and game logo'}) %>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+          
+          <div class="text-center">
+
+
+            <ul class="navbar-nav d-inline-flex">
+              <% if params[:controller].to_s == 'static' and not params[:action].to_s == 'dashboard' %>
+              <li class="nav-item">
+                <%= link_to "HOME".html_safe, root_path, class: "nav-link #{'active' if current_page?(root_path)}", 'aria-current': ('page' if current_page?(root_path)) %>
+              </li>
+              <li class='nav-item'>
+                <%= link_to 'TCG TOURNEY SIGN UPS', 'https://sipandgametcg.com', class:'nav-link' %>
+              </li>
+              <li class='nav-item'>
+                <%= link_to 'SIP & GAME EXPO', expo_path, class: "nav-link #{'active' if current_page?(expo_path)}" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'FOOD & BEVERAGE MENU', boba_tea_menu_path, class: "nav-link #{'active' if current_page?(boba_tea_menu_path)}" %>
+              </li>
+
+              <li class="nav-item">
+                <%= link_to 'GALLERY', gallery_path, class: "nav-link #{'active' if current_page?(gallery_path)}" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'ABOUT US', all_about_sip_path, class: "nav-link #{'active' if current_page?(all_about_sip_path)}" %>
+              </li>
+
+                <% if logged_in? %>
+                 <li class="nav-item">
+                  <%= link_to "DASHBOARD".html_safe, dashboard_path, class: "nav-link #{'active' if current_page?(dashboard_path)}", 'aria-current': ('page' if current_page?(dashboard_path)) %>
+                  </li> 
+                  <li class='nav-item'>
+                    <%= button_to "Log Out", logout_path, method: :delete, class: "btn btn-outline-danger" %>
+                  </li>  
+                <% end %>
+              <%# </li> %>
+              <% else %>
+ 
+                <% if logged_in? %>
+                <li class="nav-item">
+                  <%= link_to "DASHBOARD".html_safe, dashboard_path, class: "nav-link #{'active' if current_page?(dashboard_path)}", 'aria-current': ('page' if current_page?(dashboard_path)) %>
+                </li> 
+                <li class='nav-item'>
+                  <%= button_to "Log Out", logout_path, method: :delete, class: "btn btn-outline-danger" %>
+                </li>  
+                <% end %>
+              <% end %>
+            </ul>
+
+          </div>
+        </div>
+
+      </div>
+    </nav>
+    <% if params[:controller].to_s == 'static' and not params[:action].to_s == 'dashboard' %>
+    <div id="header">
+      <div>
+        <% if params[:action] == 'expo' %>
+          <%= image_tag('transparent_logo.png',{alt:'just win and loot game logo'}) %>
+        <% else %>
+          <%= image_tag('logo.png', alt:'sip and game logo') %>
+        <% end %>
+        
+        <% if params[:action] == 'boba_tea_menu' %>
+          <h1 class='title'> FOOD & BEVERAGE <br> <span class='notes'> MENU </span></h1>
+        <% elsif params[:action] == 'gallery' %>
+          <h1 class="title">
+            DRINK, EAT, GAME <br> <span class='notes'> MAKE MEMORIES </span>
+          </h1>
+        <% else %>
+          <h1 class='title'>
+            DRINK, EAT, GAME <br> <span class='notes'> REPEAT </span>
+          </h1>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
     <div class='container'>
-      <br><br>
+    <div id="flash">
+      <% flash.each do |key, value| %>
+        <div class="flash <%= key %>"><%= value %></div>
+      <% end %>
+    </div>
       <%= yield %>
     </div>
+    <footer class="bg-dark text-white pt-4 pb-2 mt-4">
+      <div class="container">
+        <div class="row">
+          <!-- Column 1: About -->
+          <div class="col-md-4 mb-3">
+            <%= image_tag('logo.png', alt:'sip and game logo') %>
+            <p>Serving up boba milk tea, games, and good vibes in Carmichael. Come play, sip, and chill.</p>
+
+            <h5 class="subtitle">Hours of operation</h5>
+            <table class='table'>
+              <tr>
+                <td>Monday</td><td>CLOSED</td>
+              </tr>
+              <tr>
+                <td>Tuesday</td><td>CLOSED</td>
+              </tr>
+              <tr>
+                <td>Wednesday</td><td>4PM - 10PM*</td>
+              </tr>
+              <tr>
+                <td>Thursday</td><td>4PM - 10PM*</td>
+              </tr>
+              <tr>
+                <td>Friday</td><td>4PM - 10PM*</td>
+              </tr>
+              <tr>
+                <td>Saturday</td><td>11AM - 10PM*</td>
+              </tr>
+              <tr>
+                <td>Sunday</td><td>11AM - 9:PM*</td>
+              </tr>
+            </table>
+
+            <i class='notes'>* Closing hours may shift depending on TCG event schedules.</i>
+          </div>
+
+          <!-- Column 2: Links -->
+          <div class="col-md-4 mb-3">
+            <h5 class='subtitle'>Quick links</h5>
+            <ul class="list-unstyled">
+              <li><a href="/" class="text-white text-decoration-none">Home</a></li>
+              <li><a href="/boba_tea_menu" class="text-white text-decoration-none">Food & Beverage Menu</a></li>
+           
+              <li><a href="/all_about_sip" class="text-white text-decoration-none">About S&G</a></li>
+            </ul>
+            <h5 class="subtitle">Articles</h5>
+            <%= link_to 'Sip & Game brings consoles, caffeine to Carmichael','https://www.bizjournals.com/sacramento/news/2025/10/06/sip-game-carmichael-video-games.html' %>
+          </div>
+
+          <!-- Column 3: Contact -->
+          <div class="col-md-4 mb-3">
+            <h5 class='subtitle'>Contact</h5>
+            <p><i class="fa-solid fa-envelope"></i>: sipandgame.carmichael@gmail.com</p>
+            <footer class="social-footer">
+              <a href="https://www.instagram.com/sipandgame" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://www.yelp.com/biz/sip-and-game-carmichael" target="_blank" rel="noopener">
+                <i class="fab fa-yelp"></i>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61581559299903" target="_blank" rel="noopener">
+                <i class="fab fa-facebook"></i>
+              </a>
+            </footer>
+            <h5 class="subtitle mt-4">Business info</h5>
+            <p>
+              <i class="fa-solid fa-envelope"></i>: sipandgame.carmichael@gmail.com
+            </p>
+            <p>
+              <i class="fa-solid fa-address-card"></i>: 6428-A Fair Oaks Blvd, Carmichael CA
+            </p>
+            <p>
+              <i class="fa-solid fa-phone"></i>: (916) 545-4038 (Carmichael) 
+            </p>
+            <p>
+              <i class="fa-solid fa-phone"></i>: (925) 880-5518 (Card shows and pop ups; Text only)
+            </p>
+          </div>
+        </div>
+
+        <hr class="border-light">
+        <div class="text-center" id='subfooter'>
+          <small>© 2025 <%= image_tag('logo.png', alt:'sip and game logo') %>. All rights reserved.</small>
+        </div>
+      </div>
+    </footer>
+
   </body>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+
 </html>

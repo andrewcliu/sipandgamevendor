@@ -1,134 +1,104 @@
-<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-  <div>
-    <h1 class="display-6 fw-bold text-dark mb-1">Sip & Game Expo</h1>
+<div id="content">
+
+  
+
+
+  
+  <h2 class="title text-center">COMMUNITY DRIVEN</h2>
+  <div class="row">
+    <div class='col-md-6'>
+      <%= image_tag('tekken_tourney.jpg', style:'width:100%;border-radius:5px;') %>
+    </div>
+    <div class='col-md-6'>
+      <p>Welcome to Sip and Game where gaming, trading cards (Pokemon, MTG & more), and boba all come together in one vibrant space. Dive into the action on our five 50-inch TVs, test your reflexes in spontaneous tournaments, connect with the community, or settle in for a round of Magic: Commander.</p>
+
+      <p>We aim to be community-driven lounge hosting weekly events, tournaments, and card shows designed to bring players and collectors together. Whether you are here to recharge, meet new friends, enjoy a refreshing boba, or simply relax, Sip and Game is your spot.</p>
+      <p>We can't wait to welcome you!</p>
+      <p>
+        For up to date info on our events please follow us on our <%= link_to 'Instagram', 'https://www.instagram.com/sipandgame/' %>!
+      </p>
+      <br>
+      <h3 class="subtitle">Business info</h3>
+      <p>
+        <i class="fa-solid fa-envelope"></i>: sipandgame.carmichael@gmail.com
+      </p>
+      <p>
+        <i class="fa-solid fa-address-card"></i>: <%= link_to '6428-A Fair Oaks Blvd, Carmichael CA', 'https://maps.app.goo.gl/BaWVzErfDVHbo6jJ8' %>
+      </p>
+      <p>
+        <i class="fa-solid fa-phone"></i>: (916) 545-4038
+      </p>
+    </div>
+  </div>
+  <br>
+  <br>
+  <h2 class="title text-center">WHAT WE HAVE CARMICHAEL</h2>
+  <div class='row'>
+    <div class='col-sm-12 col-md-5'>
+
+      <div class='mt-4'>
+        <div class="card">
+          <%= image_tag('pokemon.jpg', {class:'card-img-top', alt:'pokemon pikachu image'}) %>
+          <div class="card-body">
+            <h3 class="card-title">TCG</h3>
+            <p class="card-text">Pokemon and Magic The Gathering. Hosting events weekly!</p>
+            <%= link_to 'SIGN UP FOR TOURNEY', 'https://sipandgametcg.com', class:'btn btn-danger' %>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class='col-sm-12 col-md-3'>
+      <div class=' mt-4'>
+
+        <div class="card">
+          <%= image_tag('console.jpg', {class:'card-img-top', alt:'xbox one and playstation 5'}) %>
+
+          <div class="card-body">
+            <h3 class="card-title">Console Games</h3>
+            <p class="card-text">
+              <ol>
+                <li><span class='important'>2 </span> Xbox Series S with Game Pass </li>
+                <li><span class='important'>2 </span> PlayStation 5 with PS Plus Premium</li>
+                <li><span class='important'>1 </span> Arcade</li>
+              </ol>
+
+          
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class=' mt-4'>
+        <div class="card">
+          <%= image_tag('board_games.jpg', {class:'card-img-top', alt:'board games'}) %>
+          <div class="card-body">
+            <h3 class="card-title">Board Games</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='col-sm-12 col-md-4'>
+      <div class=' mt-4'>
+        <div class="card">
+          <%= image_tag('boba.jpg', {class:'card-img-top', alt:'korea fresh fruit selection'}) %>
+          <div class="card-body">
+            <h3 class="card-title">Boba Tea & More</h3>
+            <%= link_to 'Check out menu', boba_tea_menu_path, class:'btn btn-danger' %>
+    
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
-  <div class="d-flex gap-2">
-    <%= link_to new_event_path, class: 'btn btn-primary d-inline-flex align-items-center' do %>
-      <i class="bi bi-calendar-plus me-2"></i>Create New Event
-    <% end %>
-    <%= link_to new_vendor_path, class: 'btn btn-dark d-inline-flex align-items-center' do %>
-      <i class="bi bi-person-plus me-2"></i>Add New Vendor
-    <% end %>
-  </div>
+
+
+
 </div>
 
-<h3 class="h4 mb-3 text-dark fw-semibold d-flex align-items-center">
-  <i class="bi bi-calendar2-check me-2 text-primary"></i>Upcoming Events
-</h3>
-
-<div class="card shadow-sm border-0 overflow-hidden mb-5">
-  <div class="table-responsive">
-    <table class="table table-hover align-middle mb-0">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col" class="ps-4">Event Title</th>
-          <th scope="col">Location</th>
-          <th scope="col" class="text-center">Vendors Count</th>
-          <th scope="col" class="text-center pe-4">Total Tables</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @events.any? %>
-          <% @events.each do |event| %>
-            <tr>
-              <td class="ps-4">
-                <%= link_to event_path(event), class: 'text-decoration-none fw-semibold text-dark dashboard-link' do %>
-                  <%= event.title %> <i class="bi bi-arrow-right small text-primary opacity-0 hover-show"></i>
-                <% end %>
-              </td>
-
-              <td class="text-secondary">
-                <i class="bi bi-geo-alt me-1 small"></i>
-                <%= event.location %>
-              </td>
-              <td class="text-center">
-                <span class="badge rounded-pill bg-primary-subtle text-primary px-3 py-2 border border-primary-subtle fw-bold">
-                  <i class="bi bi-people-fill me-1"></i><%= event.vendors.count %>
-                </span>
-              </td>
-              <td class="text-center pe-4">
-                <span class="badge rounded-pill bg-light text-dark px-3 py-2 border fw-bold">
-                  <i class="bi bi-grid-3x3-gap me-1"></i><%= event.vendors.sum(:total_tables) %>
-                </span>
-              </td>
-            </tr>
-          <% end %>
-        <% else %>
-          <tr>
-            <td colspan="5" class="text-center text-muted py-5">
-              <i class="bi bi-calendar-x display-6 mb-2 d-block text-black-50"></i>
-              No upcoming events at this time.
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
 
 
-<h3 class="h4 mb-3 text-dark fw-semibold d-flex align-items-center">
-  <i class="bi bi-clock-history me-2 text-secondary"></i>Past Events History
-</h3>
 
-<div class="card shadow-sm border-0 overflow-hidden">
-  <div class="table-responsive">
-    <table class="table table-hover align-middle mb-0">
-      <thead class="table-secondary text-dark">
-        <tr>
-          <th scope="col" class="ps-4">Event Title</th>
-          <th scope="col">Date</th>
-          <th scope="col">Location</th>
-          <th scope="col" class="text-center">Total Vendors</th>
-          <th scope="col" class="text-center pe-4">Total Tables</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% past_events = Event.where("date < ?", Date.current).order(date: :desc).limit(15) %>
-        
-        <% if past_events.any? %>
-          <% past_events.each do |event| %>
-            <tr class="table-light-subtle">
-              <td class="ps-4">
-                <%= link_to event_path(event), class: 'text-decoration-none fw-semibold text-secondary dashboard-link' do %>
-                  <%= event.title %> <i class="bi bi-arrow-right small text-secondary opacity-0 hover-show"></i>
-                <% end %>
-              </td>
-              <td class="text-muted">
-                <i class="bi bi-calendar3 me-1 small"></i>
-                <%= event.date.strftime("%B %d, %Y") %>
-              </td>
-              <td class="text-muted">
-                <i class="bi bi-geo-alt me-1 small"></i>
-                <%= event.location %>
-              </td>
-              <td class="text-center">
-                <span class="badge rounded-pill bg-secondary-subtle text-secondary px-3 py-2 border border-secondary-subtle fw-bold">
-                  <i class="bi bi-people-fill me-1"></i><%= event.vendors.count %>
-                </span>
-              </td>
-              <td class="text-center pe-4">
-                <span class="badge rounded-pill bg-light text-muted px-3 py-2 border fw-bold">
-                  <i class="bi bi-grid-3x3-gap me-1"></i><%= event.vendors.sum(:total_tables) %>
-                </span>
-              </td>
-            </tr>
-          <% end %>
-        <% else %>
-          <tr>
-            <td colspan="5" class="text-center text-muted py-4">
-              No previous event history found.
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-<style>
-  .dashboard-link:hover .hover-show { opacity: 1 !important; transition: opacity 0.2s ease-in-out; }
-</style>

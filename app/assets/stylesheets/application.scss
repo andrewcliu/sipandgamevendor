@@ -1,0 +1,438 @@
+@import "bootstrap";
+@import "font-awesome";
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap');
+.dash{
+	h2, h3, h1{
+		color:white!important;
+	}
+}
+@media (max-width: 768px) {
+	#header img{
+		width:60%;
+	}
+	#header{
+		height:75vh!important;
+	}
+	#header .title{
+		font-size:2.5rem !important;
+	}
+	.title{
+		font-size:1.75rem !important;
+	}
+}
+.notes{
+	color:#6FB447;
+}
+.navbar-nav .nav-link.active {
+  color: #6FB447 !important;
+}
+#gallery{
+	img{
+		width:100%;
+	}
+}
+#header{
+	background-image:url('mvc.jpg');
+	background-position: center;
+	background-size:cover;
+	height:100vh;
+	display: flex;
+	justify-content:center;
+	align-items: 	center;
+	text-align: center;
+	color: white;
+}
+.social-footer a {
+  margin: 0 10px;
+  color: #555;
+  font-size: 24px;
+  transition: color 0.3s ease;
+}
+
+.social-footer a:hover {
+  color: #007bff; /* or your brand color */
+}
+#content{
+	img{
+		width:100%;
+	}
+}
+#header img{
+	width:70%;
+}
+
+#gallery{
+	img{
+		width:100%;
+	}
+}
+#header .title{
+	font-size:3.75rem;
+	color:white;
+}
+.fc-daygrid-event {
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  display: block !important;
+  padding-left: 5px;
+}
+
+/* Optional: make sure the title and time align nicely */
+.fc-event-title,
+.fc-event-time {
+  display: block;
+}
+
+.navbar-custom{
+	background-color: #070125!important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* subtle bottom border */
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.2); /* soft shadow below */
+  z-index: 10; /* ensures it sits above other content */
+
+}
+body{
+	background-color:#08010A!important;
+	height:auto;
+	color:white!important;
+}
+
+.calendar {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.day-cell {
+  height: 100px;
+  border: 1px solid #dee2e6;
+  padding: 5px;
+  cursor: pointer;
+}
+.day-cell.today {
+  background-color: #e0f7fa;
+  border: 2px solid #0d6efd;
+}
+
+
+.card-body{
+	background-color:#070125;
+	color:white!important;
+}
+
+
+.card{
+	border:none!important;
+}
+
+#jwal{
+	margin-top:5rem;
+}
+#jwalPage{
+	min-height: 100vh;
+}
+#jwal_row{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.jwal_img{
+
+	width:25%;
+	display:inline-block;
+	vertical-align: top;
+	img{
+		width:100%;
+	}
+}
+#jimg1{
+	transform: rotate(-15deg);
+	z-index: -9999;
+}
+#jimg2{
+	transform: rotate(18deg);
+	z-index: -9999;
+}
+#jmidimg{
+	z-index: 99999;
+	position:relative;
+}
+footer{
+	border-color:none!important;
+	img{
+		width:125px;
+	}
+	#subfooter{
+		img{
+			width:64px;
+		}
+	}
+}
+
+.title{
+	font-family: "Rubik Dirt", system-ui;
+	font-size:2.75rem;
+	color:#6FB447;
+}
+
+.card-title, .subtitle, .nav-link{
+		font-family: "Rubik Dirt", system-ui;
+}
+
+#menu{
+	min-height: 100vh;
+}
+
+#menu img{
+	width:100%;
+}
+
+.important{
+	font-family: "Rubik Dirt", system-ui;
+	font-size:1.5rem;
+}
+
+.table tr, .table td{
+	background-color:transparent!important;
+	color:white!important;
+	border:none!important;
+}
+
+/* Layout */
+.event-calendar-row{
+  row-gap: 18px;
+}
+
+.vcs-image-card{
+  width: 100%;
+  background: #fff;
+  border: 3px solid #e00022;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.22);
+}
+
+.vcs-image{
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  object-fit: cover;
+}
+
+@media (max-width: 991px){
+  .vcs-image{
+    min-height: 340px;
+  }
+}
+
+/* Card shells */
+.pokedex-calendar,
+.pokedex-upcoming{
+  width: 100%;
+  background: #ffffff;
+  border: 3px solid #e00022;             /* red frame */
+  border-radius: 16px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.22);
+  overflow: hidden;
+}
+
+/* Header strip */
+.pokedex-header{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #e00022;                    /* pokedex red */
+  color: #fff;
+  border-bottom: 3px solid #b3001b;
+}
+
+.pokedex-dot{
+  width: 14px; height: 14px;
+  background: #00d6ff;                    /* blue accent */
+  border: 2px solid #fff;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px #111;
+}
+
+.pokedex-title{
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pokedex-badge{
+  margin-left: auto;
+  background: #fff;
+  color: #e00022;
+  border: 2px solid #e00022;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* FullCalendar container */
+#calendar{
+  padding: 12px;
+}
+
+/* FullCalendar theme overrides */
+.fc .fc-toolbar-title{
+  font-weight: 900;
+  color: #111;
+}
+
+.fc .fc-button{
+  background: #fff;
+  border: 2px solid #e00022;
+  color: #e00022;
+  border-radius: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.fc .fc-button:hover{ filter: brightness(0.96); }
+.fc .fc-button-primary:not(:disabled).fc-button-active{
+  background: #e00022;
+  border-color: #e00022;
+  color: #fff;
+}
+
+.fc .fc-col-header-cell{
+  background: #fff6f6;                    /* faint pink */
+  border-bottom: 2px solid #e00022;
+}
+
+.fc .fc-col-header-cell-cushion{
+  color: #111;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.fc .fc-daygrid-day{
+  border: 1px solid rgba(224,0,34,0.35);  /* red grid lines */
+}
+
+.fc .fc-daygrid-day-number{
+  color: #111;
+  font-weight: 800;
+  padding: 6px;
+}
+
+/* Event pill look */
+.fc .fc-event{
+  border: 2px solid #e00022;
+  background: #e00022;
+  color: #fff;
+  border-radius: 10px;
+  padding: 2px 6px;
+  box-shadow: 0 2px 0 #b3001b;
+}
+
+.fc .fc-event:hover{ filter: brightness(1.05); }
+
+/* Upcoming panel */
+.pokedex-upcoming-header{
+  padding: 12px 14px;
+  background: #fff6f6;
+  border-bottom: 2px solid #e00022;
+}
+
+.pokedex-upcoming-title{
+  font-weight: 900;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.upcoming-list{
+  padding: 12px 12px 14px;
+}
+
+.upcoming-item{
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 2px solid #e00022;
+  border-left: 10px solid #e00022;        /* red “pokedex” stripe */
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #b3001b;
+}
+
+.upcoming-item:hover{ transform: translateY(-1px); }
+.upcoming-item-title{ font-weight: 900; color: #111; }
+.upcoming-item-meta{ opacity: 0.85; font-weight: 700; color: #111; font-size: 0.9rem; }
+.upcoming-empty{ padding: 10px; font-weight: 800; color: #111; }
+
+/* Modal */
+.event-modal.hidden{ display: none; }
+.event-modal{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.event-modal-backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.event-modal-card{
+  position: relative;
+  margin: 8vh auto;
+  max-width: 680px;
+  width: calc(100% - 24px);
+  background: #fff;
+  border: 3px solid #e00022;
+  border-radius: 16px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+}
+
+.event-modal-close{
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  background: #fff;
+  border: 2px solid #e00022;
+  border-radius: 10px;
+  padding: 4px 10px;
+  font-weight: 900;
+  color: #e00022;
+  cursor: pointer;
+}
+
+.modal-title{
+  margin: 4px 0 10px;
+  color: #111;
+  font-weight: 1000;
+  letter-spacing: 0.2px;
+}
+
+.modal-meta{
+  border-top: 2px dashed rgba(224,0,34,0.35);
+  border-bottom: 2px dashed rgba(224,0,34,0.35);
+  padding: 10px 0;
+  margin-bottom: 12px;
+}
+
+.modal-row{
+  color: #111;
+  font-weight: 800;
+  margin: 4px 0;
+}
+
+.modal-desc{
+  color: #111;
+  white-space: pre-wrap;
+  font-weight: 700;
+}
