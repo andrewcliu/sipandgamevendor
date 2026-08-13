@@ -4,8 +4,21 @@
     <div class='col-sm-4'>
       <%= image_tag('transparent_logo.png') %>
       <p>
-        Bringing the pop-ups and TCG events to the Bay Area and Sacramento.
+        Sip and Game Expo brings pop-ups and TCG events to the Bay Area and Sacramento.
       </p>
+      <h5 class='subtitle'>Built for the community</h5>
+      <p>
+        
+          <ul>
+            <li>Fair rates for vendors</li>
+            <li>Free entry for ALL attendees regardless of age (CA)</li>
+            <li>Mostly free parking (dependent on venue)</li>
+            <li>
+              Free limited boba as a perk if venue permits 
+            </li>
+          </ul>
+      </p>
+      <h5 class='subtitle'>Grow the community together</h5>
       <button class='btn-danger btn btn-lg'>Become a Vendor</button>
       <button class='btn-danger btn btn-lg'>Be a Sponsor</button>
     </div>
@@ -34,7 +47,7 @@
               </h3>
 
               <% if event.location.present? %>
-                <p class="card-text text-muted small mt-auto mb-0">
+                <p class="card-text small mt-auto mb-0" style='color:white;'>
                   📍 <%= event.location %>
                 </p>
               <% end %>
