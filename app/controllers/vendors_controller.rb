@@ -3,7 +3,12 @@ class VendorsController < ApplicationController
 
   def new
     @vendor = Vendor.new(event_id: params[:event_id])
-  end
+
+    @pacific_vendors = Vendor.joins(:event)
+                             .where("LOWER(events.location) LIKE ?", "%pacific%")
+                             .select("DISTINCT ON (vendors.ig_handle) vendors.*")
+                             .order("vendors.ig_handle, vendors.price ASC")
+      end
 
   def edit
     @vendor = Vendor.find(params[:id])

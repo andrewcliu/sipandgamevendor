@@ -81,8 +81,11 @@
   </div>
   <div class='col-sm-3'>
 
+
+
+<!-- Table rendered on server load -->
 <div class="mb-3">
-  <input class="form-control" id="vendorSearch" type="text" placeholder="Search by IG Handle...">
+  <input class="form-control" id="vendorSearch" type="text" placeholder="Search by IG Handle or Name...">
 </div>
 
 <div class="table-responsive">
@@ -95,10 +98,8 @@
       </tr>
     </thead>
     <tbody id="vendorTableBody">
-      <% distinct_vendors = Vendor.select("DISTINCT ON (ig_handle) *").order("ig_handle, price ASC") %>
-      
-      <% if distinct_vendors.any? %>
-        <% distinct_vendors.each do |v| %>
+      <% if @pacific_vendors.any? %>
+        <% @pacific_vendors.each do |v| %>
           <tr>
             <td><strong><%= v.name %></strong></td>
             <td><%= v.ig_handle %></td>
@@ -107,48 +108,30 @@
         <% end %>
       <% else %>
         <tr id="no-vendors-row">
-          <td colspan="3" class="text-center text-muted py-3">No vendors found.</td>
+          <td colspan="3" class="text-center text-muted py-3">No Pacific vendors found.</td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
 </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<!-- Pass Ruby Variable to JS -->
 <script type="text/javascript">
+  // Ruby array converted to native JS array on server render
+  const pacificVendors = <%= raw @pacific_vendors.to_json(only: [:id, :name, :ig_handle, :price]) %>;
+
+  // Simple, fast client-side search on pre-filtered rows
   document.addEventListener('input', function(event) {
     if (event.target && event.target.id === 'vendorSearch') {
       const filter = event.target.value.toLowerCase().trim();
-      const rows = Array.from(document.querySelectorAll('#vendorTableBody tr'));
-
-      // Hide all rows by default
-      rows.forEach(row => row.style.display = 'none');
-
-      // Map to track lowest price row per IG handle
-      const lowestPriceMap = new Map();
+      const rows = document.querySelectorAll('#vendorTableBody tr');
 
       rows.forEach(row => {
         if (row.id === 'no-vendors-row') return;
-
-        // Downcase location and row content prior to search
-        const location = (row.dataset.location || '').toLowerCase();
         const rowText = row.textContent.toLowerCase();
-
-        // Check if location contains 'pacific' AND matches search filter
-        if (location.includes('pacific') && rowText.includes(filter)) {
-          const ig = (row.dataset.ig || row.children[1]?.textContent || '').toLowerCase().trim();
-          const price = parseFloat(row.dataset.price || row.children[2]?.textContent.replace(/[^0-9.]/g, '')) || Infinity;
-
-          // Keep only the lowest price entry for this IG handle
-          if (!lowestPriceMap.has(ig) || price < lowestPriceMap.get(ig).price) {
-            lowestPriceMap.set(ig, { row, price });
-          }
-        }
-      });
-
-      // Display only the winning lowest-price rows
-      lowestPriceMap.forEach(({ row }) => {
-        row.style.display = '';
+        row.style.display = rowText.includes(filter) ? '' : 'none';
       });
     }
   });
