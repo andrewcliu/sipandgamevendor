@@ -121,7 +121,7 @@ body{
 
 .card-body{
 	background-color:#070125;
-	color:white!important;
+	color:black!important;
 }
 
 
@@ -196,7 +196,7 @@ footer{
 	font-size:1.5rem;
 }
 
-.table tr, .table td{
+footer .table tr, footer .table td{
 	background-color:transparent!important;
 	color:white!important;
 	border:none!important;

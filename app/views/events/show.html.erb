@@ -26,7 +26,7 @@
       
       <div class="bg-white p-3 rounded border shadow-sm text-end min-w-200">
         <span class="text-uppercase tracking-wider text-muted fw-bold small d-block mb-1">Total Gross Revenue</span>
-        <h2 class="h3 mb-0 fw-bold text-success font-monospace">
+        <h2 class="h3 mb-0 fw-bold text-success font-monospace" style='color:black!important;'>
           <% total_revenue = @event.vendors.sum { |v| v.price.to_f * v.total_tables.to_i } %>
           <%= number_to_currency(total_revenue) %>
         </h2>
