@@ -1,20 +1,18 @@
 <div class='dash'>
-<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-  <div>
-    <h1 class="display-6 fw-bold text-dark mb-1">Sip & Game Expo</h1>
+<div class="text-center mt-4">
 
-  </div>
-  <div class="d-flex gap-2">
+    <%= image_tag('transparent_logo.png', style:'width:35%;') %>
+    <br>
     <%= link_to new_event_path, class: 'btn btn-primary d-inline-flex align-items-center' do %>
-      <i class="bi bi-calendar-plus me-2"></i>Create New Event
+      <i class="bi bi-calendar-plus me-2"></i>CREATE NEW EVENT
     <% end %>
     <%= link_to new_vendor_path, class: 'btn btn-dark d-inline-flex align-items-center' do %>
-      <i class="bi bi-person-plus me-2"></i>Add New Vendor
+      <i class="bi bi-person-plus me-2"></i>ADD NEW VENDOR
     <% end %>
   </div>
-</div>
 
-<h3 class="h4 mb-3 text-dark fw-semibold d-flex align-items-center">
+
+<h3 class="subtitle">
   <i class="bi bi-calendar2-check me-2 text-primary"></i>Upcoming Events
 </h3>
 
@@ -69,7 +67,7 @@
 </div>
 
 
-<h3 class="h4 mb-3 text-dark fw-semibold d-flex align-items-center">
+<h3 class="subtitle align-items-center">
   <i class="bi bi-clock-history me-2 text-secondary"></i>Past Events History
 </h3>
 

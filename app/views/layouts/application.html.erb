@@ -75,7 +75,7 @@
                 <%= link_to "HOME".html_safe, root_path, class: "nav-link #{'active' if current_page?(root_path)}", 'aria-current': ('page' if current_page?(root_path)) %>
               </li>
               <li class='nav-item'>
-                <%= link_to 'TCG TOURNEY SIGN UPS', 'https://sipandgametcg.com', class:'nav-link' %>
+                <%= link_to 'TCG TOURNEY SIGN UPS', 'https://sipandgametcg.com', class: 'nav-link', target: '_blank', rel: 'noopener' %>
               </li>
               <li class='nav-item'>
                 <%= link_to 'SIP & GAME EXPO', expo_path, class: "nav-link #{'active' if current_page?(expo_path)}" %>
@@ -97,7 +97,7 @@
                   </li> 
 
                   <li class='nav-item'>
-                    <%= button_to "Log Out", logout_path, method: :delete, class: "btn btn-outline-danger" %>
+                    <%= button_to "SIGN OUT", logout_path, method: :delete, class: "btn btn-danger" %>
                   </li>  
                 <% end %>
               <%# </li> %>
@@ -111,7 +111,7 @@
                   <%= link_to 'EXPO FRONT END', expo_path, class: "nav-link #{'active' if current_page?(expo_path)}" %>
                 </li>
                 <li class='nav-item'>
-                  <%= button_to "Log Out", logout_path, method: :delete, class: "btn btn-outline-danger" %>
+                  <%= button_to "SIGN OUT", logout_path, method: :delete, class: "btn btn-danger" %>
                 </li>  
                 <% end %>
               <% end %>
@@ -162,7 +162,7 @@
             <%= image_tag('logo.png', alt:'sip and game logo') %>
             <p>Serving up boba milk tea, games, and good vibes in Carmichael. Come play, sip, and chill.</p>
 
-            <h5 class="subtitle">Hours of operation</h5>
+            <h5 class="subtitle">Carmichael store hours</h5>
             <table class='table'>
               <tr>
                 <td>Monday</td><td>CLOSED</td>
