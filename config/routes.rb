@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "sessions/create"
   get "sessions/destroy"
   get 'expo' => 'static#expo'
+  get "/sitemap.xml", to: "sitemaps#index", defaults: { format: "xml" }
   get 'dashboard' => 'static#dashboard'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'

@@ -10,7 +10,9 @@ class StaticController < ApplicationController
   end
 
   def expo
-    @events = Event.all
+    @events = Event.includes(:vendors)
+                 .where("date >= ?", Date.yesterday)
+                 .order(date: :asc)
   end
 
   def all_about_sip

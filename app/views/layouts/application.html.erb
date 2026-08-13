@@ -118,28 +118,29 @@
 
       </div>
     </nav>
-    <% if params[:controller].to_s == 'static' and not params[:action].to_s == 'dashboard' %>
-    <div id="header">
-      <div>
-        <% if params[:action] == 'expo' %>
-          <%= image_tag('transparent_logo.png',{alt:'just win and loot game logo'}) %>
-        <% else %>
-          <%= image_tag('logo.png', alt:'sip and game logo') %>
-        <% end %>
-        
-        <% if params[:action] == 'boba_tea_menu' %>
-          <h1 class='title'> FOOD & BEVERAGE <br> <span class='notes'> MENU </span></h1>
-        <% elsif params[:action] == 'gallery' %>
-          <h1 class="title">
-            DRINK, EAT, GAME <br> <span class='notes'> MAKE MEMORIES </span>
-          </h1>
-        <% else %>
-          <h1 class='title'>
-            DRINK, EAT, GAME <br> <span class='notes'> REPEAT </span>
-          </h1>
-        <% end %>
-      </div>
-    </div>
+    <% unless params[:action] == 'expo' %>
+      <% if params[:controller].to_s == 'static' and not params[:action].to_s == 'dashboard' %>
+        <div id="header">
+          <div>
+            
+         
+            <%= image_tag('logo.png', alt:'sip and game logo') %>
+           
+            
+            <% if params[:action] == 'boba_tea_menu' %>
+              <h1 class='title'> FOOD & BEVERAGE <br> <span class='notes'> MENU </span></h1>
+            <% elsif params[:action] == 'gallery' %>
+              <h1 class="title">
+                DRINK, EAT, GAME <br> <span class='notes'> MAKE MEMORIES </span>
+              </h1>
+            <% else %>
+              <h1 class='title'>
+                DRINK, EAT, GAME <br> <span class='notes'> REPEAT </span>
+              </h1>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
     <div class='container'>
     <div id="flash">

@@ -1,66 +1,67 @@
-<div class="container my-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Event Calendar</h2>
-    <%= link_to "+ New Event", new_event_path, class: "btn btn-primary" %>
+
+<div class="container my-4" id='expo'>
+  <div class='row'>
+    <div class='col-sm-4'>
+      <%= image_tag('transparent_logo.png') %>
+      <p>
+        Bringing the pop-ups and TCG events to the Bay Area and Sacramento.
+      </p>
+      <button class='btn-danger btn btn-lg'>Become a Vendor</button>
+      <button class='btn-danger btn btn-lg'>Be a Sponsor</button>
+    </div>
+    <div class='col-sm-8'>
+      <%= image_tag('expo.jpg', class:'pop-out-img') %>
+    </div>
   </div>
+  <h2 class="title text-center mt-4">UPCOMING EVENTS</h2>
+  <% if @events.any? %>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% @events.each do |event| %>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge bg-primary text-wrap">
+                  📅 <%= event.date&.strftime("%b %d, %Y") || "TBD" %>
+                </span>
+                <span class="badge bg-secondary">
+                  Vendor count: <%= event.vendors.sum{|e|e.total_tables.to_i} %> 
+                </span>
+              </div>
 
-  <%= month_calendar(events: @events, attribute: :date) do |date, events| %>
-    <div class="day-number mb-1 fw-bold text-muted"><%= date.day %></div>
+              <h3 class="card-title mt-2 mb-2" style='color:white;'>
+                <%= event.title %>
+              </h3>
 
-    <% events.each do |event| %>
-      <div class="event-item bg-primary text-white p-1 mb-1 rounded small">
-        <%= link_to event.title, event_path(event), class: "text-white text-decoration-none fw-semibold d-block text-truncate" %>
-        <% if event.location.present? %>
-          <small class="d-block opacity-75 text-truncate">📍 <%= event.location %></small>
-        <% end %>
-      </div>
-    <% end %>
+              <% if event.location.present? %>
+                <p class="card-text text-muted small mt-auto mb-0">
+                  📍 <%= event.location %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-5 bg-light rounded">
+      <p class="text-muted mb-3">No events found.</p>
+      <%= link_to "Create your first event", new_event_path, class: "btn btn-outline-primary btn-sm" %>
+    </div>
   <% end %>
 </div>
 
 <style type="text/css">
-	/* Calendar Layout */
-.simple-calendar {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-  background-color: #011;
+  /* Card or Image Pop-Out Effect */
+
+/* Standalone Image Pop-Out */
+.pop-out-img {
+  border-radius: 12px;
+  transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
 }
 
-.simple-calendar th {
-  text-align: center;
-  padding: 10px;
-  background-color: #FFF;
-  border: 1px solid #FFF;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  color: #6c757d;
-}
-
-.simple-calendar td {
-  height: 120px;
-  vertical-align: top;
-  padding: 6px;
-  color:#FFF;
-  border: 1px solid #FFF;
-  background-color: #ffffff;
-}
-
-/* Today's Date Highlight */
-.simple-calendar .today {
-  background-color: #eef6ff;
-}
-
-/* Days outside the current month */
-.simple-calendar .prev-month,
-.simple-calendar .next-month {
-  background-color: #f8f9fa;
-  opacity: 0.5;
-}
-
-/* Event badges */
-.event-item {
-  font-size: 0.8rem;
-  line-height: 1.2;
+.pop-out-img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 </style>
