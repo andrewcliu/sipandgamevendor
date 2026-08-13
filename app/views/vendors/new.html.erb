@@ -116,18 +116,40 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-  $(document).on('turbo:load', function() { 
-    $("#vendorSearch").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      
-      $("#vendorTableBody tr").each(function() {
-        if ($(this).attr('id') === 'no-vendors-row') return;
+  document.addEventListener('input', function(event) {
+    if (event.target && event.target.id === 'vendorSearch') {
+      const filter = event.target.value.toLowerCase().trim();
+      const rows = Array.from(document.querySelectorAll('#vendorTableBody tr'));
 
-        // Targets the 2nd column (index 1) for the IG handle
-        var igText = $(this).find("td").eq(1).text().toLowerCase();
-        $(this).toggle(igText.indexOf(value) > -1);
+      // Hide all rows by default
+      rows.forEach(row => row.style.display = 'none');
+
+      // Map to track lowest price row per IG handle
+      const lowestPriceMap = new Map();
+
+      rows.forEach(row => {
+        if (row.id === 'no-vendors-row') return;
+
+        // Downcase location and row content prior to search
+        const location = (row.dataset.location || '').toLowerCase();
+        const rowText = row.textContent.toLowerCase();
+
+        // Check if location contains 'pacific' AND matches search filter
+        if (location.includes('pacific') && rowText.includes(filter)) {
+          const ig = (row.dataset.ig || row.children[1]?.textContent || '').toLowerCase().trim();
+          const price = parseFloat(row.dataset.price || row.children[2]?.textContent.replace(/[^0-9.]/g, '')) || Infinity;
+
+          // Keep only the lowest price entry for this IG handle
+          if (!lowestPriceMap.has(ig) || price < lowestPriceMap.get(ig).price) {
+            lowestPriceMap.set(ig, { row, price });
+          }
+        }
       });
-    });
+
+      // Display only the winning lowest-price rows
+      lowestPriceMap.forEach(({ row }) => {
+        row.style.display = '';
+      });
+    }
   });
 </script>
-  </div>

@@ -19,8 +19,8 @@
           </ul>
       </p>
       <h5 class='subtitle'>Grow the community together</h5>
-      <button class='btn-danger btn btn-lg'>Become a Vendor</button>
-      <button class='btn-danger btn btn-lg'>Be a Sponsor</button>
+      <button class='btn-danger btn btn-lg disabled'>Become A Vendor</button>
+      <button class='btn-danger btn btn-lg disabled'>Become A Sponsor</button>
     </div>
     <div class='col-sm-8'>
       <%= image_tag('expo.jpg', class:'pop-out-img') %>
@@ -37,9 +37,7 @@
                 <span class="badge bg-primary text-wrap">
                   📅 <%= event.date&.strftime("%b %d, %Y") || "TBD" %>
                 </span>
-                <span class="badge bg-secondary">
-                  Vendor count: <%= event.vendors.sum{|e|e.total_tables.to_i} %> 
-                </span>
+           
               </div>
 
               <h3 class="card-title mt-2 mb-2" style='color:white;'>
