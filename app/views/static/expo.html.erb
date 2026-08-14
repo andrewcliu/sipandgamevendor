@@ -50,7 +50,11 @@
                 <p class="card-text small mt-auto mb-0" style='color:white;'>
                   📍 <%= event.location %>
                   <hr>
-                  <%= event.notes.html_safe %>
+                  <% if event.notes.present? %>
+                    <%= event.notes.html_safe %>
+                  <% else %>
+                    No info yet
+                  <% end %>
                 </p>
               <% end %>
             </div>
