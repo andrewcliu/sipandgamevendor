@@ -8,12 +8,13 @@ class VendorsController < ApplicationController
                              .where("LOWER(events.location) LIKE ?", "%pacific%")
                              .select("DISTINCT ON (vendors.ig_handle) vendors.*")
                              .order("vendors.ig_handle, vendors.price ASC")
-      end
+  end
 
   def edit
     @vendor = Vendor.find(params[:id])
   end
-
+  def show 
+  end
   def create
     @vendor = Vendor.new(vendor_params)
     @vendor.name = @vendor.name&.downcase
@@ -28,13 +29,12 @@ class VendorsController < ApplicationController
 
   def destroy
     @vendor = Vendor.find(params[:id])
-    @event = @vendor.event
-    
-    @vendor.destroy
-    
-    redirect_to event_path(@event), notice: "Vendor was successfully deleted.", status: :see_other
-  end
+    event = @vendor.event # or @vendor.event_id
 
+    @vendor.destroy
+
+    redirect_to event_path(event), notice: "Vendor was successfully deleted.", status: :see_other
+  end
   # PATCH/PUT /vendors/:id
   def update
     @vendor = Vendor.find(params[:id])
