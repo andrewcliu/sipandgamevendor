@@ -49,6 +49,8 @@
               <% if event.location.present? %>
                 <p class="card-text small mt-auto mb-0" style='color:white;'>
                   📍 <%= event.location %>
+                  <hr>
+                  <%= event.notes.html_safe %>
                 </p>
               <% end %>
             </div>

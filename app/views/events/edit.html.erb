@@ -29,6 +29,12 @@
             <%= f.date_field :date, class: "form-control" %>
           </div>
 
+          <div class='mb-3'>
+            <%= f.label :notes, class: "form-label fw-bold text-secondary" %>
+            <%= f.text_area :notes, rows: 3, class: "form-control", placeholder: "Event notes or internal details..." %>
+
+          </div>
+
           <div class="mb-4">
             <%= f.label :location, class: "form-label fw-bold text-secondary" %>
             <%= f.text_field :location, class: "form-control", placeholder: "e.g., Downtown Convention Center" %>
