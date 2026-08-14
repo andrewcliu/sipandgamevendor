@@ -1,5 +1,7 @@
 User-agent: *
-Disallow: /admin/
-Allow: /
+Disallow: /dashboard
+Disallow: /events/
+Disallow: /vendors/
+Disallow: /sessions/
 
 Sitemap: https://sipandgame.com/sitemap.xml
