@@ -21,7 +21,7 @@
       <h5 class='subtitle'>Grow the community together</h5>
       <button class='btn-danger btn btn-lg disabled'>BECOME A VENDOR</button>
       <br><br>  
-      <%= link_to 'BECOME A SPONSOR', "#" class: 'btn btn-danger btn-lg disabled' %>
+      <%= link_to 'BECOME A SPONSOR', "#", class: 'btn btn-danger btn-lg disabled' %>
       <br><br>
     </div>
     <div class='col-sm-8'>
@@ -30,9 +30,9 @@
   </div>
   <h2 class="title text-center mt-4">UPCOMING EVENTS</h2>
   <% if @events.any? %>
-    <div class="row g-4 mt-2" id="events-grid">
+    <div class="events-masonry mt-4">
       <% @events.each do |event| %>
-        <div class="col-12 col-md-6 col-lg-4 grid-item">
+        <div class="events-masonry-item">
           <div class="card shadow-sm">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
