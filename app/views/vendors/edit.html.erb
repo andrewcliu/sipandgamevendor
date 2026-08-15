@@ -47,6 +47,7 @@
               <%= f.number_field :total_tables, min: 1, class: "form-control", placeholder: "Current: #{@vendor.total_tables}", required: true %>
             </div>
           </div>
+
           <div class="col-md-6 mb-3">
             <%= f.label :deposit_paid, "Deposit Paid", class: "form-label fw-bold" %>
             <div class="input-group">
@@ -61,7 +62,6 @@
               Payment Processing Status 
               <span class="text-muted text-lowercase font-monospace">(current state checked below)</span>
             </h6>
-            
 
             <div class="form-check form-switch mb-1">
               <%= f.check_box :received_payment, class: "form-check-input", role: "switch" %>
@@ -83,13 +83,15 @@
             <%= link_to event_path(@vendor.event_id), class: "btn btn-outline-secondary mt-1 d-inline-flex align-items-center justify-content-center" do %>
               <i class="bi bi-x-circle me-2"></i>Cancel & Back to Event
             <% end %>
-
-            <hr class="my-2">
-            
-            <%= button_to "Delete Vendor", vendor_path(@vendor), method: :delete, class: "btn btn-danger btn-lg", data: { turbo_confirm: "Are you sure?" } %>
           </div>
 
         <% end %>
+
+        <!-- Delete Action Outside form_with -->
+        <hr class="my-3">
+        <div class="d-grid">
+          <%= button_to "Delete Vendor", vendor_path(@vendor), method: :delete, class: "btn btn-danger btn-lg w-100", data: { turbo_confirm: "Are you sure you want to delete this vendor?" } %>
+        </div>
 
       </div>
     </div>
