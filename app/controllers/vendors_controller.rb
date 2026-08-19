@@ -1,6 +1,12 @@
 class VendorsController < ApplicationController
   before_action :require_user
-
+  def index
+    # Fetch all registrations with events ordered by newest event first, then group by handle
+    @vendor_groups = Vendor.includes(:event)
+                           .where.not(ig_handle: [nil, ""])
+                           .order("events.date DESC")
+                           .group_by { |v| v.ig_handle.downcase }
+  end
   def new
     @vendor = Vendor.new(event_id: params[:event_id])
 
