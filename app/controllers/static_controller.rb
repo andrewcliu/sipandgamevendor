@@ -15,6 +15,9 @@ class StaticController < ApplicationController
                  .order(date: :asc)
   end
 
+  def expo_sponsor
+  end
+
   def all_about_sip
   end
   def dashboard

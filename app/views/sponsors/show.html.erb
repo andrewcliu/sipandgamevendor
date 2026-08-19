@@ -1,0 +1,31 @@
+<div class="container my-4 dash">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+          <h1 class="h3 subtitle"><%= @sponsor.company_name %></h1>
+          <% if logged_in? %>
+            <%= link_to "Edit", edit_sponsor_path(@sponsor), class: "btn btn-sm btn-light" %>
+          <% end %>
+        </div>
+        <div class="card-body p-4">
+          <p><strong>Representative:</strong> <%= @sponsor.representative_name %></p>
+          <p><strong>Email:</strong> <%= mail_to @sponsor.email %></p>
+          <% if @sponsor.message.present? %>
+            <hr>
+            <p class="mb-1"><strong>Message / Notes:</strong></p>
+            <p class="text-secondary"><%= @sponsor.message %></p>
+          <% end %>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+          <% if logged_in? %>
+            <%= link_to "← Back to Sponsors", sponsors_path, class: "btn btn-outline-secondary btn-sm" %>
+            <%= button_to "Delete Sponsor", sponsor_path(@sponsor), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+          <% else %>
+            <%= link_to "← Back to Home", expo_path, class: "btn btn-outline-secondary btn-sm" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

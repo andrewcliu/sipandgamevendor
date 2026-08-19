@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
     resources :events
     resources :vendors
+    resources :sponsors
     get "sessions/new"
     get "sessions/create"
     get "sessions/destroy"
